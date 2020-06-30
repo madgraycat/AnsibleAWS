@@ -1,0 +1,36 @@
+---
+- name: Create EC2
+  hosts: webserver
+  tasks:
+    - name: Create new security group
+      ec2_group:
+        name: "{{ sg_name }}"
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        aws_secret_key:
+        aws_access_key:
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: ssh
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+        rules_engress:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+    - name: Create EC2 instance
+      ec2:
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        region: "{{ region }}"
+        wait: yes
+        group: "{{ sg_name }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        assign_public_ip: yes
+        count: 1
+        key_name: "{{ key_name }}"
