@@ -55,7 +55,7 @@
       lineinfile:
         path: /etc/ansible/hosts
         insertafter: '[webserver]'
-        line: {{ item.public_ip}}
+        line: "{{ item.public_ip}}"
       with_items: "{{ ec2.instances }}"
 #      local_action:
 #        lineinfile:
