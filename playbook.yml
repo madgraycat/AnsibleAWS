@@ -51,10 +51,11 @@
           sudo service nginx start
           sudo service nginx enabled
       register: ec2
-    - name: adding
-      add_host:
-        hostname: "{{ ec2.instances[0]| json_query('public_ip_address') }}"
-#    - name: add to hosts file
+    - name: add
+      lineinfile:
+        path: /etc/ansible/hosts
+        insertafter: '[webserver]'
+        line: {{ item.public_ip}}
 #      local_action:
 #        lineinfile:
 #          path: /etc/ansible/hosts
