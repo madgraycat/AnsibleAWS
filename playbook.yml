@@ -1,36 +1,47 @@
 ---
-- name: Create EC2
-  hosts: webserver
-  tasks:
-    - name: Create new security group
+- name: Create ec2 instance
+  hosts: local
+  connection: local
+  vars:
+    instance_type: t2.micro
+    image: ami-04781752c9b20ea41
+    security_group_name: SSH-HTTP
+    vpc_ip: default
+    vpc_subnet_id: default
+    region: us-east-2
+    keypair: devops_10_ubuntu
+
+   tasks:
+     -name: Create security group
       ec2_group:
-        name: "{{ sg_name }}"
-        vpc_id: "{{ vpc_id }}"
+        name: "{{ security_group_name }}"
         region: "{{ region }}"
-        aws_secret_key:
-        aws_access_key:
+        aws_access_key: "{{ ec2_access_key }}"
+        aws_secret_key: "{{ ec2_secret_key }}"
         rules:
           - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
-          - proto: ssh
             from_port: 22
-            to_port: 22
+            to port: 22
             cidr_ip: 0.0.0.0/0
         rules_engress:
           - proto: tcp
-            from_port: 80
-            to_port: 80
+            from_port: 8080
+            to port: 8080
             cidr_ip: 0.0.0.0/0
-    - name: Create EC2 instance
-      ec2:
-        instance_type: "{{ instance_type }}"
-        image: "{{ image }}"
-        region: "{{ region }}"
-        wait: yes
-        group: "{{ sg_name }}"
-        vpc_subnet_id: "{{ vpc_subnet_id }}"
-        assign_public_ip: yes
-        count: 1
-        key_name: "{{ key_name }}"
+      - name: new ec2 instance
+        ec2:
+          aws_access_key: "{{ ec2_access_key }}"
+          aws_secret_key: "{{ ec2_secret_key }}"
+          group: "{{ security_group_name }}"
+          instance_type: "{{ instance_type }}"
+          image: "{{ image }}"
+          wait: true
+          region: "{{ region }}"
+          keypair: "{{ keypair }"
+          count: 1
+        register: ec2
+      - name: add new instance to hosts
+        add_host:
+          name: "{{ item_public_ip }}"
+          groups: webserver
+        with_items: "{{ ec2_instances }}"
