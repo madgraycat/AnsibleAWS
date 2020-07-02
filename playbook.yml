@@ -52,12 +52,8 @@
           sudo service nginx enabled
       register: ec2
     - name: add
-      lineinfile:
-        path: "/etc/ansible/hosts"
-        regexp: "{{ item.public_ip}} "
-        insertafter: '[webserver]'
-        line: "{{ item.public_ip}}"
-      with_items: "{{ ec2.instances }}"
+      add_host:
+        hostname: "{{ ec2.instances[0] | json_query('public_ip_address') }}"
       delegate_to: localhost
 
     - name: wait for ssh
