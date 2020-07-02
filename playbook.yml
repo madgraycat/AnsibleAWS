@@ -26,9 +26,7 @@
             to_port: 22
             cidr_ip: 0.0.0.0/0
         rules_egress:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
+          - proto: all
             cidr_ip: 0.0.0.0/0
     - name: new ec2 instance
       ec2:
