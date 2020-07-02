@@ -10,8 +10,7 @@
     vpc_subnet_id: default
     region: us-east-2
     keypair: devops_10_ubuntu
-  vars_files:
-    - pass.yml
+
 
   tasks:
     - name: Create security group
