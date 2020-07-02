@@ -54,6 +54,7 @@
     - name: update inventory
       add_host:
         hostname: "{{ output.instances[0].public_ip }}"
+        groups: webserver
       delegate_to: localhost
 
     - name: wait for ssh
