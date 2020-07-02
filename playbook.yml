@@ -45,6 +45,7 @@
           sudo apt update
           sudo apt install python nginx -y
           sudo service nginx start
+          sudo service nginx enabled
       register: ec2
     - name: add new instance to hosts file
       add_host:
@@ -59,6 +60,7 @@
       with_items: "{{ ec2.instances }}"
 - name: copy new index.html
   hosts: webserver
+  remote_user: ubuntu
   become: yes
   tasks:
     - name: copy index.html
