@@ -47,8 +47,20 @@
         name: "{{ item.public_ip }}"
         groups: webserver
       with_items: "{{ ec2.instances }}"
+
+- name: wait for ssh
+  wait_for:
+    host: "{{ item.public_ip "
+    port: 22
+    state: started
+  with_items: "{{ ec2.instances }}"
+
 - name: install nginx
   hosts: webserver
+  become: yes
+  pre_tasks:
+    - name: install python
+      raw: 'sudo apt-get -y install python'
   tasks:
     - name: install nginx
       apt:
