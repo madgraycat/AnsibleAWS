@@ -16,16 +16,17 @@
     - name: Create security group
       ec2_group:
         name: "{{ security_group_name }}"
+        description: Webserver security group
         region: "{{ region }}"
-        aws_access_key: "{{ ec2_access_key }}"
-        aws_secret_key: "{{ ec2_secret_key }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
         rules:
           - proto: tcp
             from_port: 22
-            to port: 22
+            to_port: 22
             cidr_ip: 0.0.0.0/0
-        rules_engress:
+        rules_egress:
           - proto: tcp
             from_port: 8080
-            to port: 8080
+            to_port: 8080
             cidr_ip: 0.0.0.0/0
