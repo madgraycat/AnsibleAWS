@@ -11,20 +11,20 @@
     region: us-east-2
     keypair: devops_10_ubuntu
 
-   tasks:
-     -name: Create security group
-      ec2_group:
-        name: "{{ security_group_name }}"
-        region: "{{ region }}"
-        aws_access_key: "{{ ec2_access_key }}"
-        aws_secret_key: "{{ ec2_secret_key }}"
-        rules:
-          - proto: tcp
-            from_port: 22
-            to port: 22
-            cidr_ip: 0.0.0.0/0
-        rules_engress:
-          - proto: tcp
-            from_port: 8080
-            to port: 8080
-            cidr_ip: 0.0.0.0/0
+  tasks:
+    -name: Create security group
+     ec2_group:
+       name: "{{ security_group_name }}"
+       region: "{{ region }}"
+       aws_access_key: "{{ ec2_access_key }}"
+       aws_secret_key: "{{ ec2_secret_key }}"
+       rules:
+         - proto: tcp
+           from_port: 22
+           to port: 22
+           cidr_ip: 0.0.0.0/0
+       rules_engress:
+         - proto: tcp
+           from_port: 8080
+           to port: 8080
+           cidr_ip: 0.0.0.0/0
