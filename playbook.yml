@@ -46,4 +46,4 @@
       add_host:
         name: "{{ item.public_ip }}"
         groups: webserver
-      with_items: "{{ ec2_instances }}"
+      with_items: "{{ ec2.instances }}"
