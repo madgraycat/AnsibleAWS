@@ -53,7 +53,7 @@
       register: ec2
     - name: update inventory
       add_host:
-        hostname: "{{ output.instances[0].public_ip }}"
+        hostname: "{{ ec2.instances[0].public_ip }}"
         groups: webserver
       delegate_to: localhost
 
