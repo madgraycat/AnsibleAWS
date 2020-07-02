@@ -41,6 +41,7 @@
         region: "{{ region }}"
         keypair: "{{ keypair }}"
         count: 1
+      register: ec2
     - name: add new instance to hosts file
       add_host:
         name: "{{ item_public_ip }}"
