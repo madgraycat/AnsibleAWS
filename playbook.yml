@@ -51,9 +51,9 @@
           sudo service nginx start
           sudo service nginx enabled
       register: ec2
-    - name: add
+    - name: update inventory
       add_host:
-        hostname: "{{ ec2.instances[0] | json_query('public_ip_address') }}"
+        hostname: "{{ output.instances[0].public_ip }}"
       delegate_to: localhost
 
     - name: wait for ssh
