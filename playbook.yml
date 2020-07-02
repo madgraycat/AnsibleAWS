@@ -27,8 +27,8 @@
             cidr_ip: 0.0.0.0/0
         rules_egress:
           - proto: tcp
-            from_port: 8080
-            to_port: 8080
+            from_port: 80
+            to_port: 80
             cidr_ip: 0.0.0.0/0
     - name: new ec2 instance
       ec2:
@@ -59,3 +59,15 @@
         port: 22
         state: started
       with_items: "{{ ec2.instances }}"
+- name: copy new index.html
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: copy index.html
+      copy:
+        src: ./index.html
+        dest: /var/www/html
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
