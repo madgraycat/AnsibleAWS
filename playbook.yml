@@ -31,16 +31,16 @@
             to_port: 8080
             cidr_ip: 0.0.0.0/0
     - name: new ec2 instance
-        ec2:
-          aws_access_key: "{{ aws_access_key }}"
-          aws_secret_key: "{{ aws_secret_key "
-          group: "{{ security_group_name }}"
-          instance_type: "{{ instance_type }}"
-          iname: "{{ image }}"
-          wait: true
-          region: "{{ region }}"
-          keypair: "{{ keypair }}"
-          count: 1
+      ec2:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key "
+        group: "{{ security_group_name }}"
+        instance_type: "{{ instance_type }}"
+        iname: "{{ image }}"
+        wait: true
+        region: "{{ region }}"
+        keypair: "{{ keypair }}"
+        count: 1
     - name: add new instance to hosts file
       add_host:
         name: "{{ item_public_ip }}"
