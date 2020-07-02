@@ -53,19 +53,7 @@
       register: ec2
     - name: update inventory
       add_host:
-        hostname: "{{ output.instances[0].public_ip
-
-
-
-
-
-
-
-
-
-
-
-        }}"
+        hostname: "{{ output.instances[0].public_ip }}"
       delegate_to: localhost
 
     - name: wait for ssh
