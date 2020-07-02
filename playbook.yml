@@ -33,7 +33,7 @@
     - name: new ec2 instance
       ec2:
         aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key "
+        aws_secret_key: "{{ aws_secret_key }}"
         group: "{{ security_group_name }}"
         instance_type: "{{ instance_type }}"
         image: "{{ image }}"
