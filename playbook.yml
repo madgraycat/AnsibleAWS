@@ -53,7 +53,7 @@
       register: ec2
     - name: add
       lineinfile:
-        path: /etc/ansible/hosts
+        path: "/etc/ansible/hosts"
         regexp: "{{ item.public_ip}} "
         insertafter: '[webserver]'
         line: "{{ item.public_ip}}"
