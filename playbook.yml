@@ -9,10 +9,22 @@
     vpc_ip: default
     vpc_subnet_id: default
     region: us-east-2
-    keypair: devops_10_ubuntu
+    keypair:
+
 
 
   tasks:
+    - name: create key
+      ec2_key:
+        name: aws-ansible-test
+        region: "{{ region }}"
+      register: ec2_key_result
+    - name: save private key
+      copy:
+        content: "{{ ec2_key_result.key.provate_key }}"
+        dest: ./aws-ansible-test.pem
+        mode: 0600
+      when: ec2_key_result.changed
     - name: Create security group
       ec2_group:
         name: "{{ security_group_name }}"
@@ -65,13 +77,13 @@
       with_items: "{{ ec2.instances }}"
     - name: wait for 120 sec
       wait_for:
-        timeout: 300
+        timeout: 120
       delegate_to: localhost
 - name: copy new index.html
   hosts: webserver
   remote_user: ubuntu
   vars:
-    ansible_ssh_private_key_file: ./devops_10.ppk
+    ansible_ssh_private_key_file: ./aws-ansible-test.pem
   become: yes
   tasks:
     - name: copy index.html
