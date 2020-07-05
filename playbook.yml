@@ -55,7 +55,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
-        keypair: /home/gato/project/AnsibleAWS/aws-ansible-test.pem
+        keypair: aws-ansible-test
         count: 1
         user_data:
           |
