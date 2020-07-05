@@ -18,7 +18,7 @@
       ec2_key:
         name: aws-ansible-test
         region: "{{ region }}"
-        aws_access_key: "{{ aws_access_key }"
+        aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
       register: ec2_key_result
     - name: save private key
