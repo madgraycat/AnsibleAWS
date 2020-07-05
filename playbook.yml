@@ -9,7 +9,7 @@
     vpc_ip: default
     vpc_subnet_id: default
     region: us-east-2
-    keypair: ./aws-ansible-test.pem
+
 
 
 
@@ -55,7 +55,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
-        keypair: "{{ keypair }}"
+        keypair: ./aws-ansible-test.pem
         count: 1
         user_data:
           |
