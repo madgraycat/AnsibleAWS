@@ -24,7 +24,7 @@
     - name: save private key
       copy:
         content: "{{ ec2_key_result.key.private_key }}"
-        dest: ./aws-ansible-test.pem
+        dest: /home/gato/project/AnsibleAWS/aws-ansible-test.pem
         mode: 0600
       when: ec2_key_result.changed
     - name: Create security group
@@ -55,7 +55,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
-        keypair: ./aws-ansible-test.pem
+        keypair: /home/gato/project/AnsibleAWS/aws-ansible-test.pem
         count: 1
         user_data:
           |
@@ -85,7 +85,7 @@
   hosts: webserver
   remote_user: ubuntu
   vars:
-    ansible_ssh_private_key_file: ./aws-ansible-test.pem
+    ansible_ssh_private_key_file: /home/gato/project/AnsibleAWS/aws-ansible-test.pem
   become: yes
   tasks:
     - name: copy index.html
