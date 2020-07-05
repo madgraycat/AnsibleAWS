@@ -17,10 +17,12 @@
       ec2_key:
         name: aws-ansible-test
         region: "{{ region }}"
+        aws_access_key: "{{ aws_access_key }"
+        aws_secret_key: "{{ aws_secret_key }}"
       register: ec2_key_result
     - name: save private key
       copy:
-        content: "{{ ec2_key_result.key.provate_key }}"
+        content: "{{ ec2_key_result.key.private_key }}"
         dest: ./aws-ansible-test.pem
         mode: 0600
       when: ec2_key_result.changed
