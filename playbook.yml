@@ -9,6 +9,7 @@
     vpc_ip: default
     vpc_subnet_id: default
     region: us-east-2
+    keypair: ./aws-ansible-test.pem
 
 
 
